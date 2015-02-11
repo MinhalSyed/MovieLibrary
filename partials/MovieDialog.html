@@ -1,0 +1,71 @@
+﻿<style>
+
+
+    .buttons a {
+        background: #fff;
+        color: #86aa9c;
+        float: right;
+        width: 100px;
+        position: absolute;
+        bottom: 8px;
+        right: 0;
+    }
+
+    .buttons a {
+        text-align: center;
+        cursor: pointer;
+        display: inline-block;
+        border: 2px solid #fff;
+        width: 80px;
+        font-size: 14px;
+        font-family: 'Montserrat', 'Helvetica', Arial, sans-serif;
+        font-weight: 700;
+        line-height: 21px;
+        padding: 8px 0;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        vertical-align: top;
+        margin: 0 10px;
+    }
+
+    .image {
+        position: relative;
+        opacity:0.8;
+        width:100%;
+    }
+
+    .MovieInfo {
+        position: absolute;
+        bottom:27px;
+        left: 18px;
+        width: 80%;
+        padding-left:5px;
+        max-height:80%;
+        overflow:hidden;
+    }
+
+    .MovieInfo span {
+            color: white;
+            font: bold 1.0em/1.3em Helvetica, Sans-Serif;
+            background: rgb(0, 0, 0); /* fallback color */
+            background: rgba(0, 0, 0, 0.7);
+    }
+    .MovieInfo span.spacer {
+            padding: 0 5px;
+    }
+
+</style>
+<script>
+
+
+</script>
+<div>
+    <img src="{{movie.backdrop_path}}" class="image">
+    <div class="MovieInfo">
+        <span>{{movie.title}}</span>
+        <br />
+        <span>{{movie.overview}}</span>
+    </div>
+    <div class="buttons" ng-click="Open()"><a>Trailer</a></div>
+</div>

@@ -3,17 +3,38 @@
 'use strict';
 
 angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
+.filter('offset', function() {
+    return function(input, start) {
+        start = parseInt(start, 10);
+        return input.slice(start);
+    };
+})
 
 .controller('HomeController', ['$scope', '$http', 'ngDialog', function ($scope, $http, ngDialog) {
 
-    $scope.api_key = 'e830040a87c1ef71ce545dae4e754307';
-    $scope.base_uri = "http://api.themoviedb.org/3/";
-
+    $scope.itemsPerPage = 12;
+    $scope.currentPage = 0;
     $scope.MovieJson = [];
 
     $scope.SaveCurrentLibrary = function () {
         localStorage.clear();
         localStorage.setItem('MovieJson', JSON.stringify($scope.MovieJson));
+    }
+
+    $scope.pageCount = function () {
+        return Math.ceil($scope.MovieJson.length / $scope.itemsPerPage) - 1;
+    };
+
+    $scope.prevPage = function () {
+        if ($scope.currentPage > 0) {
+            $scope.currentPage--;
+        }
+    };
+
+    $scope.nextPage = function () {
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage++;
+        }
     }
 
     $scope.OpenLibrary = function () {
@@ -78,6 +99,14 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
             }
         }
     }
+
+    $scope.prevPageDisabled = function () {
+        return $scope.currentPage === 0 ? "disabled" : "";
+    };
+
+    $scope.nextPageDisabled = function () {
+        return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+    };
 
     $scope.Open = function (movie) {
         var scope = $scope.$new();

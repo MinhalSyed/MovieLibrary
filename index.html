@@ -6,6 +6,7 @@
     <script src="scripts/movieLibrary.js"></script>
     <script src="scripts/ngDialog.js"></script>
     <script src="scripts/jquery-2.1.3.min.js"></script>
+    <script src="scripts/angular-animate.min.js"></script>
     <script src="scripts/angular-youtube-embed.js"></script>
     <script src="scripts/directive.js"></script>
 
@@ -29,7 +30,7 @@
             <input type="text" class="search rounded" placeholder="Search..." ng-model="searchText">
         </div>
         <div class="container">
-            <div ng-repeat="movie in MovieJson | filter:searchText" class="thumbnail" ng-click="Open(movie)">
+            <div ng-repeat="movie in MovieJson | offset: currentPage*itemsPerPage | filter:searchText | limitTo: itemsPerPage" class="thumbnail" ng-click="Open(movie)">
                 <div class="movieThumb">
                     <div>
                         <img class="blurayThumb" src="img/bluray_bg.png">
@@ -45,7 +46,11 @@
                 <div class="rating" ng-if="movie.vote_average">{{movie.vote_average}}/10</div>
             </div>
             <div style="clear: both;"></div>
+            
+            <div class="btn" ng-click="prevPage()" style="float:left">« Prev</div>
+            <div class="btn" ng-click="nextPage()" style="float:right">Next »</div>
         </div>
+
     </div>
 </body>
 </html>

@@ -10,7 +10,7 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
     };
 })
 
-.controller('HomeController', ['$scope', '$http', 'ngDialog', function ($scope, $http, ngDialog) {
+.controller('HomeController', ['$scope', '$http', 'ngDialog', 'APIService', function ($scope, $http, ngDialog, APIService) {
 
     $scope.itemsPerPage = 12;
     $scope.currentPage = 0;
@@ -77,7 +77,7 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
                 query = movie.title.replace("extended", "");
                 query = movie.title.replace("editions", "");
 
-                var getUrl = $scope.base_uri + 'search/movie' + '?query="' + query + '"&api_key=' + $scope.api_key;
+                var getUrl = APIService.base_uri + 'search/movie' + '?query="' + query + '"&api_key=' + APIService.api_key;
 
                 $http.get(encodeURI(getUrl))
                  .success((function (movie) {

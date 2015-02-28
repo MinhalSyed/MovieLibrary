@@ -1,14 +1,11 @@
 ﻿<style>
 
+    .btn-left {
+        left: 0px;
+    }
 
-    .buttons a {
-        background: #fff;
-        color: #86aa9c;
-        float: right;
-        width: 100px;
-        position: absolute;
-        bottom: 8px;
-        right: 0;
+    .btn-right {
+        right:0px;
     }
 
     .buttons a {
@@ -27,6 +24,11 @@
         letter-spacing: 1px;
         vertical-align: top;
         margin: 0 10px;
+        background: #fff;
+        color: #86aa9c;
+        width: auto;
+        position: absolute;
+        bottom: 8px;
     }
 
     .image {
@@ -46,13 +48,13 @@
     }
 
     .MovieInfo span {
-            color: white;
-            font: bold 1.0em/1.3em Helvetica, Sans-Serif;
-            background: rgb(0, 0, 0); /* fallback color */
-            background: rgba(0, 0, 0, 0.7);
+        color: white;
+        font: bold 1.0em/1.3em Helvetica, Sans-Serif;
+        background: rgb(0, 0, 0); /* fallback color */
+        background: rgba(0, 0, 0, 0.7);
     }
     .MovieInfo span.spacer {
-            padding: 0 5px;
+        padding: 0 5px;
     }
 
 </style>
@@ -67,5 +69,5 @@
         <br />
         <span>{{movie.overview}}</span>
     </div>
-    <div class="buttons" ng-click="Open(movie)"><a>Trailer</a></div>
+    <div class="buttons"><!--<a class="btn-left" ng-click="AddToWatchList()">+ MyList</a>--><a class="btn-right" ng-click="Open(movie)">Trailer</a></div>
 </div>

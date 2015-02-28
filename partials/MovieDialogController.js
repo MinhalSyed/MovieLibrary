@@ -1,6 +1,6 @@
-﻿angular.module('movieLibrary.moviedialog', ['ngDialog', 'directive', 'movieLibrary.movieService', 'youtube-embed'])
+﻿angular.module('movieLibrary.moviedialog', ['ngDialog', 'directive', 'movieLibrary.services', 'youtube-embed'])
 
-.controller('MovieDialogController', ['$scope', '$http', 'ngDialog', 'APIService', 'MovieService', function ($scope, $http, ngDialog, APIService, MovieService) {
+.controller('MovieDialogController', ['$scope', '$http', 'ngDialog', 'APIService', 'MovieService', 'UserService', function ($scope, $http, ngDialog, APIService, MovieService, UserService) {
     //$scope.movie = {}; Pass in movie from higher up caller;
 
     var getUrl = APIService.base_uri + 'movie/' + $scope.movie.id + '?api_key=' + APIService.api_key;
@@ -16,6 +16,11 @@
                 .after("<span class='spacer'>");
         });
     });
+
+    $scope.AddToWatchList = function()
+    {
+        UserService.GetWatchList();
+    }
 
     $scope.Open = function (movie) {
         ngDialog.close('ngDialog1');

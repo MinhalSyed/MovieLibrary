@@ -1,6 +1,6 @@
-﻿/* global YT */
+/* global YT */
 angular.module('youtube-embed', ['ng'])
-.service('youtubeEmbedUtils', ['$window', '$rootScope', function ($window, $rootScope) {
+.service ('youtubeEmbedUtils', ['$window', '$rootScope', function ($window, $rootScope) {
     var Service = {}
 
     // adapted from http://stackoverflow.com/a/5831191/1614967
@@ -66,13 +66,13 @@ angular.module('youtube-embed', ['ng'])
             seconds = parseInt(seconds, 10);
             minutes = parseInt(minutes, 10);
 
-            // t=4m
+        // t=4m
         } else if (contains(full, 'm')) {
             minutes = parseInt(minutes, 10);
             seconds = 0;
 
-            // t=4s
-            // t=4
+        // t=4s
+        // t=4
         } else {
             seconds = parseInt(minutes, 10);
             minutes = 0;
@@ -140,14 +140,14 @@ angular.module('youtube-embed', ['ng'])
             scope.playerVars = scope.playerVars || {};
 
             // YT calls callbacks outside of digest cycle
-            function applyBroadcast() {
+            function applyBroadcast () {
                 var args = Array.prototype.slice.call(arguments);
                 scope.$apply(function () {
                     scope.$emit.apply(scope, args);
                 });
             }
 
-            function onPlayerStateChange(event) {
+            function onPlayerStateChange (event) {
                 var state = stateNames[event.data];
                 if (typeof state !== 'undefined') {
                     applyBroadcast(eventPrefix + state, scope.player, event);
@@ -157,11 +157,15 @@ angular.module('youtube-embed', ['ng'])
                 });
             }
 
-            function onPlayerReady(event) {
+            function onPlayerReady (event) {
                 applyBroadcast(eventPrefix + 'ready', scope.player, event);
             }
 
-            function createPlayer() {
+            function onPlayerError (event) {
+                applyBroadcast(eventPrefix + 'error', scope.player, event);
+            }
+
+            function createPlayer () {
                 var playerVars = angular.copy(scope.playerVars);
                 playerVars.start = playerVars.start || scope.urlStartTime;
                 var player = new YT.Player(playerId, {
@@ -171,7 +175,8 @@ angular.module('youtube-embed', ['ng'])
                     playerVars: playerVars,
                     events: {
                         onReady: onPlayerReady,
-                        onStateChange: onPlayerStateChange
+                        onStateChange: onPlayerStateChange,
+                        onError: onPlayerError
                     }
                 });
 
@@ -179,7 +184,7 @@ angular.module('youtube-embed', ['ng'])
                 return player;
             }
 
-            function loadPlayer() {
+            function loadPlayer () {
                 if (scope.videoId || scope.playerVars.list) {
                     if (scope.player && scope.player.d &&
                         typeof scope.player.destroy === 'function') {
@@ -195,8 +200,8 @@ angular.module('youtube-embed', ['ng'])
                     return scope.utils.ready
                         // Wait until one of them is defined...
                         && (typeof scope.videoUrl !== 'undefined'
-                        || typeof scope.videoId !== 'undefined'
-                        || typeof scope.playerVars.list !== 'undefined');
+                        ||  typeof scope.videoId !== 'undefined'
+                        ||  typeof scope.playerVars.list !== 'undefined');
                 },
                 function (ready) {
                     if (ready) {
@@ -211,14 +216,14 @@ angular.module('youtube-embed', ['ng'])
                                 loadPlayer();
                             });
 
-                            // then, a video ID
+                        // then, a video ID
                         } else if (typeof scope.videoId !== 'undefined') {
                             scope.$watch('videoId', function () {
                                 scope.urlStartTime = null;
                                 loadPlayer();
                             });
 
-                            // finally, a list
+                        // finally, a list
                         } else {
                             scope.$watch('playerVars.list', function () {
                                 scope.urlStartTime = null;
@@ -226,9 +231,9 @@ angular.module('youtube-embed', ['ng'])
                             });
                         }
                     }
-                });
+            });
 
-            scope.$watchCollection(['playerHeight', 'playerWidth'], function () {
+            scope.$watchCollection(['playerHeight', 'playerWidth'], function() {
                 if (scope.player) {
                     scope.player.setSize(scope.playerWidth, scope.playerHeight);
                 }

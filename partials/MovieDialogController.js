@@ -1,4 +1,9 @@
-﻿angular.module('movieLibrary.moviedialog', ['ngDialog', 'directive', 'movieLibrary.services', 'youtube-embed'])
+﻿angular.module('movieLibrary.moviedialog',
+    ['ngDialog',
+     'ngDraggable',
+     'directive',
+     'movieLibrary.services',
+     'youtube-embed'])
 
 .controller('MovieDialogController', ['$scope', '$http', 'ngDialog', 'APIService', 'MovieService', 'UserService', function ($scope, $http, ngDialog, APIService, MovieService, UserService) {
     //$scope.movie = {}; Pass in movie from higher up caller;

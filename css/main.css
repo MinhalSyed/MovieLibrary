@@ -22,6 +22,18 @@
     }
 }
 
+.watchlistContainer {
+    width: 82%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin-top:25px;
+
+    border:1px solid;
+}
+
 .container {
     width: 82%;
     margin-left: auto;
@@ -178,4 +190,10 @@ input[type=button], input[type=button]:hover {
     float: left;
     margin-right: 2px;
     margin-left: 2px;
+}
+
+.placeholder {
+    height: 250px;
+    width: 100px;
+    float:left;
 }

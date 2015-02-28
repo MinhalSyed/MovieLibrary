@@ -8,7 +8,7 @@
     return MovieInfo;
 }])
 
-.factory('APIService', ['$rootScope', '$http', function ($rootScope, $http) {
+.factory('APIService', ['$http', function ($http) {
     var APIInfo = {};
 
     APIInfo.api_key = 'e830040a87c1ef71ce545dae4e754307';

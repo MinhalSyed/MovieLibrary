@@ -2,7 +2,7 @@
 /// <reference path="../partials/trailers.html" />
 'use strict';
 
-angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
+angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedialog'])
 .filter('offset', function() {
     return function(input, start) {
         start = parseInt(start, 10);
@@ -12,7 +12,7 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
 
 .controller('HomeController', ['$scope', '$http', 'ngDialog', 'APIService', function ($scope, $http, ngDialog, APIService) {
 
-    $scope.itemsPerPage = 12;
+    $scope.itemsPerPage = 6;
     $scope.currentPage = 0;
     $scope.MovieJson = [];
 

@@ -64,7 +64,8 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
     }
 
     $scope.GetMovieInfo = function () {
-        for (var i = 0; i < 10/*$scope.MovieJson.length*/; i++) {
+        var offset = ($scope.currentPage * $scope.itemsPerPage);
+        for (var i = offset ; i < offset +  $scope.itemsPerPage; i++) {
             var movie = $scope.MovieJson[i];
             if (!movie.isUpdated) {
 
@@ -96,6 +97,8 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
                          }
                      }
                  })(movie))
+
+                console.log("Got movie info from tmdb for :" + movie.title);
             }
         }
     }
@@ -122,6 +125,11 @@ angular.module('movieLibrary', ['ngDialog', 'movieLibrary.moviedialog'])
 
     $scope.$on('ImportedMoviesJson', function () {
         console.log('ImportedMoviesJson');
+        //$scope.GetMovieInfo();
+    });
+
+    $scope.$watch('currentPage', function () {
+        $scope.GetMovieInfo();
     });
 
     $scope.OpenLibrary();

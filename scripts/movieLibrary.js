@@ -10,11 +10,15 @@ angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedi
     };
 })
 
-.controller('HomeController', ['$scope', '$http', 'ngDialog', 'APIService', function ($scope, $http, ngDialog, APIService) {
+.controller('HomeController', ['$scope', '$http', 'ngDialog', 'APIService', 'UserService', function ($scope, $http, ngDialog, APIService, UserService) {
 
     $scope.itemsPerPage = 6;
     $scope.currentPage = 0;
     $scope.MovieJson = [];
+
+    $scope.GetWatchList = function () {
+        UserService.GetWatchList();
+    }
 
     $scope.SaveCurrentLibrary = function () {
         localStorage.clear();

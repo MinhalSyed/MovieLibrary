@@ -29,33 +29,15 @@
 
 <body ng-app="movieLibrary">    
     <div ng-controller="HomeController">
-        <div class="btn" ng-click="GetWatchList()">GetWatchList</div>
-        <div class="btn" ng-click="UpdateMovieLibrary()">UpdateMovieLibrary</div>
+        <div class="btn" ng-click="ShowAll()">ShowAll</div>
+        <div class="btn" ng-click="ShowWatchList()">ShowWatchList</div>
         <div class="btn" ng-click="GetMovieInfo()">GetMovieInfo</div>
         <div style="clear:both;"></div>
         <div class="lighter">
             <input type="text" class="search rounded" placeholder="Search..." ng-model="searchText">
         </div>
-        <h2>WatchList</h2>
-        <div ui-sortable="{'axis':'x', 'placeholder':'placeholder'}" class="watchlistContainer" ng-model="MovieJson">
-            <div ng-repeat="movie in MovieJson | offset: currentPage*itemsPerPage | filter:searchText | limitTo: itemsPerPage" class="thumbnail" ng-click="Open(movie)">
-                <div class="movieThumb">
-                    <div>
-                        <img class="blurayThumb" src="img/bluray_bg.png">
-                        <img src="{{movie.img}}" style="border-radius:9px 0 0px 7px">
-                    </div>
-                    <!--<div class="extension" ng-if="movie.extension.length > 0">{{movie.extension.replace(".","")}}</div>-->
-                    <div class="quality" ng-if="movie.quality.length > 0">{{movie.quality}}</div>
-                    <div class="title" ng-if="!movie.img">
-                        {{$index}}-{{movie.title}}
-                        <br />
-                    </div>
-                </div>
-                <div class="rating" ng-if="movie.vote_average">{{movie.vote_average}}/10</div>
-            </div>
-        </div>
         <div class="container">
-            <div ng-repeat="movie in MovieJson | offset: currentPage*itemsPerPage | filter:searchText | limitTo: itemsPerPage" class="thumbnail" ng-click="Open(movie)">
+            <div ng-repeat="movie in FilteredMovies = (MovieJson | filter:searchText | filterByArray: idsToFilter) | offset: currentPage*itemsPerPage | limitTo: itemsPerPage" class="thumbnail" ng-click="Open(movie)">
                 <div class="movieThumb">
                     <div>
                         <img class="blurayThumb" src="img/bluray_bg.png">
@@ -75,7 +57,6 @@
             <div class="btn" ng-click="prevPage()" style="float:left">« Prev</div>
             <div class="btn" ng-click="nextPage()" style="float:right">Next »</div>
         </div>
-
     </div>
 </body>
 </html>

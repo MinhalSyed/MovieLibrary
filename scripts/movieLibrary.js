@@ -12,12 +12,24 @@ angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedi
 
 .controller('HomeController', ['$scope', '$http', 'ngDialog', 'APIService', 'UserService', function ($scope, $http, ngDialog, APIService, UserService) {
 
-    $scope.itemsPerPage = 6;
+    $scope.itemsPerPage = 12;
     $scope.currentPage = 0;
-    $scope.MovieJson = [];
+    $scope.MovieJson = [];      //This is the entire list.
+    $scope.FilteredMovies = []; //This is the list that the user actually sees.
+
+    $scope.idsToFilter = [];
+    
+    
+    $scope.ShowAll = function () {
+        $scope.idsToFilter = [];
+    }
+
+    $scope.ShowWatchList = function () {
+        $scope.idsToFilter = UserService.Watchlist;
+    }
 
     $scope.GetWatchList = function () {
-        UserService.GetWatchList();
+        
     }
 
     $scope.SaveCurrentLibrary = function () {
@@ -26,7 +38,7 @@ angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedi
     }
 
     $scope.pageCount = function () {
-        return Math.ceil($scope.MovieJson.length / $scope.itemsPerPage) - 1;
+        return Math.ceil($scope.FilteredMovies.length / $scope.itemsPerPage) - 1;
     };
 
     $scope.prevPage = function () {
@@ -127,6 +139,13 @@ angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedi
 
     //Main Program:
 
+    $scope.$on('LoadedWatchList', function () {
+        //for (var i = 0; i < UserService.Watchlist.length; i++)
+        //{
+        //    $scope.idsToFilter.push(UserService.Watchlist[i]);
+        //}
+    });
+
     $scope.$on('ImportedMoviesJson', function () {
         console.log('ImportedMoviesJson');
         //$scope.GetMovieInfo();
@@ -137,4 +156,5 @@ angular.module('movieLibrary', ['ngDialog', 'ui.sortable', 'movieLibrary.moviedi
     });
 
     $scope.OpenLibrary();
+    
 }]);

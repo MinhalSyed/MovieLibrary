@@ -17,7 +17,7 @@
     return APIInfo;
 }])
 
-.factory('DBService', ['$http', function ($http) {
+.factory('DBService', ['$http','$rootScope', function ($http, $rootScope) {
     var APIInfo = {};
 
     APIInfo.api_key = 'e830040a87c1ef71ce545dae4e754307';
@@ -30,22 +30,21 @@
         });
     }
 
-    APIInfo.GetWatchlist = function(username)
+    APIInfo.GetWatchListURI = function (username)
     {
-        var getUrl = APIInfo.base_uri + 'User/GetWatchlist.php?user=' + username;
-        $http.get(encodeURI(getUrl)).success(function (data) {
-            console.log(data.data);
-        });
+        return APIInfo.base_uri + 'User/GetWatchlist.php?user=' + username;
     }
 
     return APIInfo;
 }])
 
-.factory('UserService', ['$http', 'DBService', function ($http, DBService) {
+.factory('UserService', ['$http', '$rootScope', 'DBService', function ($http, $rootScope, DBService) {
     var UserInfo = {};
 
     UserInfo.username = 'Admin';
     UserInfo.password = "1234";
+
+    UserInfo.Watchlist = [];
 
     UserInfo.AddUser = function () {
         //TODO:
@@ -54,12 +53,30 @@
         //});
     }
 
-    UserInfo.GetWatchList = function ()
+    UserInfo.LoadWatchList = function ()
     {
-        DBService.GetWatchlist(UserInfo.username);
+        var getUrl = DBService.GetWatchListURI(UserInfo.username);
+
+        $http.get(encodeURI(getUrl)).success(function (data) {
+            console.log('Got user watchlist.');
+            UserInfo.Watchlist = data.data;
+            $rootScope.$broadcast('LoadedWatchList', {});
+        });
     }
 
+    UserInfo.LoadWatchList();
     return UserInfo;
 }])
+
+.filter('filterByArray', function () {
+    return function (arrayToFilter, arrayToInclude) {
+        if (arrayToInclude.length == 0) {
+            return arrayToFilter;
+        }
+        return arrayToFilter.filter(function (element, index, array) {
+            return !(arrayToInclude.indexOf(element.id)<0);
+        });
+    };
+})
 
 ;
